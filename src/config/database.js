@@ -10,6 +10,7 @@ const databaseConfig = {
   dialectOptions: {
     ssl: {
       require: process.env.DB_SSL,
+      rejectUnauthorized: process.env.DB_UNAUTHORIZED,
     },
   },
   logging: false,
