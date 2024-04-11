@@ -35,6 +35,14 @@ class ProdutoController {
       return res.status(404).json({ error: "Produto não encontrado" });
     }
 
+    const id = produto.categoria;
+    const { nome } = await Categoria.findByPk(id);
+
+    produto.categoria = {
+      id,
+      nome,
+    };
+
     return res.json(produto);
   }
 
