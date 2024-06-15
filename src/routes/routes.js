@@ -15,7 +15,7 @@ routes.get("/produtos", ProdutoController.index);
 routes.get("/produto/:id", ProdutoController.show);
 routes.get("/searchProduto", ProdutoController.search);
 
-routes.get("/session", SessionController.store);
+routes.post("/session", SessionController.store);
 
 routes.use(authMiddleware);
 
