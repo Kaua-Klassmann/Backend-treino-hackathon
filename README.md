@@ -13,11 +13,35 @@ categoria: int - Foreign Key de Categoria
 
 # Rotas
 
+## Rota de Session:
+
+```
+1 - post : /session : faz login para acessar rotas privadas
+
+Entrada:
+{
+    email: "admin@gmail.com",
+    senha: "123123"
+}
+
+Retorno:
+{
+    token: "dahsj38chw4hr8f7fhd87"
+}
+
+Exemplo de autenticação necessaria nas rotas privadas:
+{
+    headers: { Authorization: `Bearer ${token}` }
+}
+```
+
 ## Rotas de Categoria:
 
 ```
 1 - get : /categorias : retorna todas as categorias
 2 - get : /categoria/:id : retorna uma categoria pelo id
+
+// ROTAS PRIVADAS
 3 - put : /atualizarNomeCategoria : atualiza o nome de uma categoria pelo id
 
 Entrada:
@@ -34,13 +58,14 @@ Entrada:
 ```
 1 - get : /produtos : retorna todos os produtos
 2 - get : /produto/:id : retorna um produto pelo id
-3 - get : /searchProduto : retorna no máximo 3 produtos que contenham tal nome 
+3 - get : /searchProduto : retorna no máximo 3 produtos que contenham tal nome
 
 Entrada:
 {
     nome: string de procura
 }
 
+// ROTAS PRIVADAS
 4 - put : /atualizarCategoriaProduto : atualiza a categoria de algum produto especifico
 
 Entrada:
