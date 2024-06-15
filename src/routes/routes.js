@@ -19,6 +19,10 @@ routes.post("/session", SessionController.store);
 
 routes.use(authMiddleware);
 
+routes.get("/verificarToken", async (req, res) => {
+  return res.json({ auth: true });
+});
+
 routes.put("/atualizarNomeCategoria", CategoriaController.updateName);
 routes.delete("/categoria/:id", CategoriaController.destroy);
 

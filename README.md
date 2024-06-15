@@ -33,6 +33,18 @@ Exemplo de autenticação necessaria nas rotas privadas:
 {
     headers: { Authorization: `Bearer ${token}` }
 }
+
+2 - get : /verificarToken : verifica se o token informado é válido
+
+Retorno de erro:
+{
+    error: 'Token inválido'
+}
+
+Retorno de sucesso:
+{
+    auth: true
+}
 ```
 
 ## Rotas de Categoria:
