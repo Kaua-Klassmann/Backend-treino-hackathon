@@ -12,6 +12,7 @@ export default async function (req, res, next) {
 
   try {
     const decoded = await jwt.verify(token, authConfig.secret);
+    req.ucargo = decoded.idCargo;
     return next();
   } catch (error) {
     return res.status(401).json({ error: "Token inválido" });

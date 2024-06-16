@@ -3,10 +3,17 @@ import CategoriaController from "../controllers/CategoriaController.js";
 import ProdutoController from "../controllers/ProdutoController.js";
 
 import authMiddleware from "../middlewares/auth.js";
+import authAdminMiddleware from "../middlewares/authAdmin.js";
 import error from "../middlewares/errorRoutes.js";
 import SessionController from "../controllers/SessionController.js";
 
 const routes = new Router();
+
+routes.post("/session", SessionController.store);
+
+routes.use(authMiddleware);
+
+routes.get("/verificarToken", SessionController.verificar);
 
 routes.get("/categorias", CategoriaController.index);
 routes.get("/categoria/:id", CategoriaController.show);
@@ -15,13 +22,7 @@ routes.get("/produtos", ProdutoController.index);
 routes.get("/produto/:id", ProdutoController.show);
 routes.get("/searchProduto", ProdutoController.search);
 
-routes.post("/session", SessionController.store);
-
-routes.use(authMiddleware);
-
-routes.get("/verificarToken", async (req, res) => {
-  return res.json({ auth: true });
-});
+routes.use(authAdminMiddleware);
 
 routes.put("/atualizarNomeCategoria", CategoriaController.updateName);
 routes.delete("/categoria/:id", CategoriaController.destroy);

@@ -1,6 +1,9 @@
 import Yup from "yup";
 import jwt from "jsonwebtoken";
 
+import Usuario from "../models/Usuario.js";
+import Cargo from "../models/Cargo.js";
+
 import authConfig from "../config/auth.js";
 
 class SessionController {
@@ -16,15 +19,38 @@ class SessionController {
 
     const { email, senha } = req.body;
 
-    if (!(email === "admin@gmail.com" && senha === "123123")) {
+    const usuario = await Usuario.findOne({
+      where: {
+        email: email,
+      },
+      attributes: ["id", "nome"],
+      include: {
+        model: Cargo,
+        as: "cargo",
+        attributes: ["id", "nome"],
+      },
+    });
+
+    if (!usuario) {
       return res.status(400).json({ error: "Usuario não encontrado" });
     }
 
+    if (!(senha === "123123")) {
+      return res.status(400).json({ error: "Senha incorreta" });
+    }
+
+    const idCargo = usuario.cargo.id;
+
     return res.json({
-      token: jwt.sign({}, authConfig.secret, {
+      usuario,
+      token: jwt.sign({ idCargo }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });
+  }
+
+  async verificar(req, res) {
+    return res.json({ auth: true });
   }
 }
 

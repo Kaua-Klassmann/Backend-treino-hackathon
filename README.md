@@ -9,6 +9,32 @@ Tabela Produto:
 id: int - Primary Key
 nome: string
 categoria: int - Foreign Key de Categoria
+
+Tabela Cargo:
+id: int - Primary Key
+nome: string
+
+Tabel Usuario:
+id: int - Primary Key
+nome: string
+email: string
+idCargo: int - Foreign Key de Cargo
+
+---------------------------------
+
+Usuarios criados:
+[
+    {
+        email: 'carlos@gmail.com',
+        senha: '123123'
+        cargo: 1  // admin
+    },
+    {
+        email: 'cleiton@gmail.com',
+        senha: '123123',
+        cargo: 2  // funcionario
+    }
+]
 ```
 
 # Rotas
@@ -47,13 +73,15 @@ Retorno de sucesso:
 }
 ```
 
+## Todas as rotas abaixo são privadas
+
 ## Rotas de Categoria:
 
 ```
 1 - get : /categorias : retorna todas as categorias
 2 - get : /categoria/:id : retorna uma categoria pelo id
 
-// ROTAS PRIVADAS
+// ROTAS DE ADMIN
 3 - put : /atualizarNomeCategoria : atualiza o nome de uma categoria pelo id
 
 Entrada:
@@ -77,7 +105,7 @@ Entrada:
     nome: string de procura
 }
 
-// ROTAS PRIVADAS
+// ROTAS DE ADMIN
 4 - put : /atualizarCategoriaProduto : atualiza a categoria de algum produto especifico
 
 Entrada:
