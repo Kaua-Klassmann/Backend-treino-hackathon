@@ -8,7 +8,7 @@ nome: string
 Tabela Produto:
 id: int - Primary Key
 nome: string
-categoria: int - Foreign Key de Categoria
+idCategoria: int - Foreign Key de Categoria
 
 Tabela Cargo:
 id: int - Primary Key

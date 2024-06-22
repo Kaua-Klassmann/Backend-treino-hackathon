@@ -5,43 +5,35 @@ import { Op } from "sequelize";
 
 class ProdutoController {
   async index(req, res) {
-    const produtos = await Produto.findAll();
+    const produtos = await Produto.findAll({
+      attributes: ["id", "nome"],
+      include: {
+        model: Categoria,
+        as: "categoria",
+        attributes: ["id", "nome"],
+      },
+    });
 
     if (!produtos) {
       return res.status(404).json("Nenhum produto encontrado");
-    }
-
-    async function get(index) {
-      const id = produtos[index].categoria;
-      const { nome } = await Categoria.findByPk(id);
-
-      produtos[index].categoria = {
-        id,
-        nome,
-      };
-    }
-
-    for (let index = 0; index < produtos.length; index++) {
-      await get(index);
     }
 
     return res.json(produtos);
   }
 
   async show(req, res) {
-    const produto = await Produto.findByPk(req.params.id);
+    const produto = await Produto.findByPk(req.params.id, {
+      attributes: ["id", "nome"],
+      include: {
+        model: Categoria,
+        as: "categoria",
+        attributes: ["id", "nome"],
+      },
+    });
 
     if (!produto) {
       return res.status(404).json({ error: "Produto não encontrado" });
     }
-
-    const id = produto.categoria;
-    const { nome } = await Categoria.findByPk(id);
-
-    produto.categoria = {
-      id,
-      nome,
-    };
 
     return res.json(produto);
   }
@@ -65,6 +57,11 @@ class ProdutoController {
         },
       },
       limit: 3,
+      include: {
+        model: Categoria,
+        as: "categoria",
+        attributes: ["id", "nome"],
+      },
     });
 
     if (!produtos) {

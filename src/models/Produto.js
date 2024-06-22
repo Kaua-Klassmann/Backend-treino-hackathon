@@ -24,7 +24,10 @@ class Produto extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Categoria, { foreignKey: "categoria" });
+    this.belongsTo(models.Categoria, {
+      foreignKey: "idCategoria",
+      as: "categoria",
+    });
   }
 }
 
